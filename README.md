@@ -1,4 +1,4 @@
-# 0107-my-algo
+# 0107-leetcode-tutorial
 ## leetcode 刷题之旅
 
 ### 一、 必备工具包
