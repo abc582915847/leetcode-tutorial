@@ -81,18 +81,12 @@ class Solution {
         if (root == null)
             return 0;
 
-        if (root.left == null && root.right == null) return;
+        if (root.left == null && root.right != null)
+            return 1 + dfs(root.right);
+        if (root.left != null && root.right == null)
+            return 1 + dfs(root.left);
 
-        int left = dfs(root.left);
-        int right = dfs(root.right);
-
-        if(Math.min(left,right)==1){
-            ans = Math.max(ans,Math.max(left,right));
-        }else {
-            ans = 
-        }
-
-        return Math.max(left,right) + 1;
+        return Math.min(dfs(root.left), dfs(root.right)) + 1;
     }
 
 }
