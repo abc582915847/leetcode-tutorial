@@ -52,41 +52,37 @@ public class TreeNode {
 
 class Solution {
 
-    List<String> ansStrList = new ArrayList<>();
-    String       delim      = ",";
+    List<List<Integer>> ans = new ArrayList<>();
 
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
-        List<List<Integer>> ans = new ArrayList<>();
         if (root == null)
             return ans;
 
-        dfs(root, "", sum);
-
-        ansStrList.forEach(f -> {
-            List<Integer> ints = new ArrayList<>();
-            String[]      arr  = f.split(delim);
-            for (String i : arr) {
-                ints.add(Integer.parseInt(i));
-            }
-            ans.add(ints);
-        });
+        dfs(root, new ArrayList<>(), sum);
 
         return ans;
     }
 
-    void dfs(TreeNode root, String merge, int sum) {
+    void dfs(TreeNode root, List<Integer> path, int sum) {
 
         if (root == null)
             return;
 
-        if (root.left == null && root.right == null && (sum - root.val) == 0) {
-            String v = merge + root.val;
-            ansStrList.add(v);
+        path.add(root.val);
+
+        if (root.left == null && root.right == null) {
+            if ((sum - root.val) == 0) {
+                ans.add(new ArrayList<>(path));
+            }
+            path.remove(path.size() - 1);
             return;
         }
 
-        dfs(root.left, merge + root.val + delim, sum - root.val);
-        dfs(root.right, merge + root.val + delim, sum - root.val);
+        dfs(root.left, path, sum - root.val);
+        dfs(root.right, path, sum - root.val);
+
+        path.remove(path.size() - 1);
+
     }
 
 }
