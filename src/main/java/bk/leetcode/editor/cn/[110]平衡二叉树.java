@@ -59,7 +59,7 @@
  */
 
 public class TreeNode {
-    int      val;
+    int val;
     TreeNode left;
     TreeNode right;
 
@@ -91,10 +91,9 @@ class Solution {
     }
 
     int dfs(TreeNode root) {
-        if (root == null)
-            return 0;
+        if (root == null) return 0;
 
-        int left  = dfs(root.left);
+        int left = dfs(root.left);
         int right = dfs(root.right);
 
         if (Math.abs(left - right) > 1) {
