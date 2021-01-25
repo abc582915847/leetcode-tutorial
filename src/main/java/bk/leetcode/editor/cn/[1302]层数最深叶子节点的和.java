@@ -24,6 +24,8 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Definition for a binary tree node.
@@ -45,35 +47,41 @@ public class TreeNode {
 }
 
 class Solution {
-    List<Integer> levels = new ArrayList<>();
+    List<Integer> ans = new ArrayList<>();
 
     public int deepestLeavesSum(TreeNode root) {
         if (root == null)
             return 0;
 
-        dfs(root, 0);
+        bfs(root);
 
-        return levels.get(levels.size() - 1);
+        return ans.get(ans.size() - 1);
 
     }
 
-    void dfs(TreeNode root, int depth) {
+    void bfs(TreeNode root) {
 
         if (root == null)
             return;
 
-        if (levels.size() == depth) {
-            levels.add(0);
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            int sum  = 0;
+            for (int i = 0; i < size; i++) {
+                TreeNode nextNode = queue.poll();
+                sum += nextNode.val;
+
+                if (nextNode.left != null)
+                    queue.add(nextNode.left);
+                if (nextNode.right != null)
+                    queue.add(nextNode.right);
+            }
+            ans.add(sum);
         }
 
-        if (root.left == null && root.right == null) {
-            levels.set(depth, levels.get(depth) + root.val);
-            return;
-        }
-        levels.set(depth, levels.get(depth) + root.val);
-
-        dfs(root.left, depth + 1);
-        dfs(root.right, depth + 1);
     }
 
 }
