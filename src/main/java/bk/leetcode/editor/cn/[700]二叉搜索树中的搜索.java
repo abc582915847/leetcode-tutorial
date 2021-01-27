@@ -65,28 +65,12 @@ public class TreeNode {
 
 class Solution {
 
-    TreeNode res = null;
-
     public TreeNode searchBST(TreeNode root, int val) {
-        if (root == null)
-            return null;
+        if (root == null || root.val == val)
+            return root;
 
-        dfs(root, val);
-        return res;
+        return root.val < val ? searchBST(root.right, val) : searchBST(root.left, val);
     }
 
-    void dfs(TreeNode root, int target) {
-
-        if (root == null)
-            return;
-
-        if (root.val == target) {
-            res = root;
-            return;
-        }
-
-        dfs(root.left, target);
-        dfs(root.right, target);
-    }
 }
 //leetcode submit region end(Prohibit modification and deletion)
